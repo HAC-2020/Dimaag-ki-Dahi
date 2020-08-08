@@ -107,7 +107,7 @@ app.get("/meeting/:id", async (req, res) => {
     studentLog.push(currentStudentLog);
   });
   console.log(JSON.stringify(studentLog));
-  res.render("lecture", { studentLog });
+  res.render("lecture", { title: meeting.name, studentLog });
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log("server listening on port", port));
