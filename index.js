@@ -70,7 +70,7 @@ app.get("/meetings/:id", async (req, res) => {
 });
 
 app.get("/dashboard", async (req, res) => {
-  const meetings = await Meeting.find({"end_time":{$ne:null}});
+  const meetings = await Meeting.find({ end_time: { $ne: null } });
   res.render("dashboard", { meetings });
 });
 
@@ -78,40 +78,39 @@ app.get("/meeting/:id", async (req, res) => {
   const meeting = await Meeting.findById(req.params.id);
   let students = {};
   let events = meeting.events;
-  events.forEach(event => {
+  events.forEach((event) => {
     const name = event.user_name;
-    if(students[name]) {
-        students[name].push(new Date(event.time));
+    if (students[name]) {
+      students[name].push(new Date(event.time));
     } else {
-        students[name] = new Array();
-        students[name].push(new Date(event.time));
+      students[name] = new Array();
+      students[name].push(new Date(event.time));
     }
   });
   console.log(students);
   let studentLog = new Array();
-  Object.keys(students).forEach(student => {
+  Object.keys(students).forEach((student) => {
     let durations = new Array();
     let totalTimeSpent = 0;
-    for(var i = 0;i < students[student].length;i += 2) {
-        let start = students[student][i];
-        let end = students[student][i+1];
-        let span = end.getTime() - start.getTime();
-        durations.push({start, end, span});
-        totalTimeSpent += span;
+    for (var i = 0; i < students[student].length; i += 2) {
+      let start = students[student][i];
+      let end = students[student][i + 1];
+      let span = end.getTime() - start.getTime();
+      durations.push({ start, end, span });
+      totalTimeSpent += span;
     }
     let currentStudentLog = {
-        name: student,
-        durations,
-        totalTimeSpent
+      name: student,
+      durations,
+      totalTimeSpent,
     };
     studentLog.push(currentStudentLog);
   });
   console.log(JSON.stringify(studentLog));
-  res.render("lecture", { title: meeting.name, studentLog });
+  res.render("lecture", { data: { title: meeting.name, studentLog } });
 });
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log("server listening on port", port));
-
 
 /*
 
