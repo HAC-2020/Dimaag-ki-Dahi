@@ -17,7 +17,7 @@ This project aims to simplify and automate one of the tasks in online teaching, 
 * Ngrok for hosting
 
 #### Steps for setup(for meeting hosts)
-* Clone this repository and run the project using `npm start`.
+* Clone this repository and run the project using `npm run dev`.
 * Expose port 3000 to the internet using ngrok. Copy the link. 
 * Create a Zoom app on your account(webhook only). Add event subscriptions and subscribe to the following events: 
     * Meeting started

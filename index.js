@@ -46,5 +46,23 @@ app.post('/', async (req, res) => {
     res.end();
 });
 
+app.get('/meetings/all', async(req, res) => {
+    try {
+        const meetings = await Meeting.find();
+        res.json({success: true, meetings});
+    } catch(err) {
+        res.status(500).json({success: false, message: 'internal server error'});
+    }
+});
+
+app.get('/meetings/:id', async (req, res) => {
+    try {
+        const meeting = await Meeting.findById(req.params.id);
+        res.json({success: true, meeting});
+    } catch(err) {
+        res.status(500).json({success: false, message: 'internal server error'});
+    }
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log("server listening on port", port));
