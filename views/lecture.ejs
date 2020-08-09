@@ -1,19 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Meeting</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    
-  </head>
-  <body>
-    <%
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meeting</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
+
+</head>
+
+<body style="background-color: #f8f9fc; font-family: 'Lato', sans-serif;">
+  <%
       function getTime (timestamp) {
         console.log(timestamp);
         let ss = Math.floor(timestamp / 1000);
@@ -26,50 +25,66 @@
         return `${hours} hours, ${mins} minutes, ${ss} seconds`;
       }
     %>
-    <div class="container">
-      <h3>List of students for lecture: <%= data.title %></h3>
-      <div class="accordion" id="accordionExample">
-        <% for(var i = 0; i < data.studentLog.length; i++) { %>
-        <div class="card">
-          <div class="card-header" id="heading<%= i %>">
-            <h2 class="mb-0">
-              <button
-                class="btn btn-link"
-                type="button"
-                data-toggle="collapse"
-                data-target="#card<%= i %>"
-                aria-expanded="false"
-                aria-controls="card<%= i %>"
-              >
-                <%= data.studentLog[i].name %>
-              </button>
-            </h2>
-          </div>
 
-          <div
-            id="card<%= i %>"
-            class="collapse"
-            aria-labelledby="headingOne"
-            data-parent="#accordionExample"
-          >
-            <div class="card-body">
-              <ul>
-                <% for(var j = 0; j < data.studentLog[i].durations.length; j++)
-                {%>
-                <li>
-                  From : <%=
-                  data.studentLog[i].durations[j].start.toLocaleString() %> to
-                  <%= data.studentLog[i].durations[j].end.toLocaleString() %>
-                  (Duration : <%= getTime(data.studentLog[i].durations[j].span) %>)
-                </li>
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="/dashboard"><img src="/logo.png" width="20" height="20" alt="" /><span>OLAA</span></a>
+  </nav>
+  <div class="container">
+    <div class="mt-3">
+      <h3>List of students for lecture: <%= data.title %></h3>
+    </div>
+    <div class="accordion" id="accordionExample">
+      <% for(var i = 0; i < data.studentLog.length; i++) { %>
+      <div class="card">
+        <div class="card-header" id="heading<%= i %>">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#card<%= i %>"
+              aria-expanded="false" aria-controls="card<%= i %>">
+              <%= data.studentLog[i].name %>
+            </button>
+          </h2>
+        </div>
+
+        <div id="card<%= i %>" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Start</th>
+                  <th scope="col">End</th>
+                  <th scope="col">Duration</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for(var j = 0; j < data.studentLog[i].durations.length;
+                j++) {%>
+                <tr>
+                  <th scope="row"><%= j+ 1 %></th>
+                  <td>
+                    <%= data.studentLog[i].durations[j].start.toLocaleString()
+                    %>
+                  </td>
+                  <td>
+                    <%= data.studentLog[i].durations[j].end.toLocaleString()
+                    %>
+                  </td>
+                  <td>
+                    <%= getTime(data.studentLog[i].durations[j].span) %>
+                    <!-- <%= data.studentLog[i].durations[j].end.toLocaleString()
+                    %> -->
+                  </td>
+                </tr>
+
                 <%}%>
-              </ul>
+              </tbody>
+            </table>
 
               <p>Total time spent: <%= getTime(data.studentLog[i].totalTimeSpent)%></p>
-            </div>
           </div>
         </div>
-        <%}%>
+      </div>
+      <%}%>
       </div>
     </div>
     <script

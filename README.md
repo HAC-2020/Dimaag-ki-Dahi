@@ -10,6 +10,7 @@ This project aims to simplify and automate one of the tasks in online teaching, 
 * Zoom meeting events API
 * NodeJS for the backend
 * MongoDB as database
+* EJS for the frontend
 
 #### Prerequisites for local setup
 * NodeJS
@@ -26,3 +27,4 @@ This project aims to simplify and automate one of the tasks in online teaching, 
     * Participant left
 * In the *Event notification endpoint URL* add the above link.
 * Now logging is enabled. Make sure you run the server and update the endpoint everytime you restart ngrok. 
+* You can now visit the dashboard at `localhost:3000/dashboard`

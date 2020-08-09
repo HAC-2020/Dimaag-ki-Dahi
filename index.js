@@ -9,6 +9,7 @@ app.use(bp.json());
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
+app.use(express.static("public"));
 mongoose
   .connect(process.env.MONGO_URL, { useNewUrlParser: true })
   .then(() => console.log("connected to database"))
@@ -108,7 +109,7 @@ app.get("/meeting/:id", async (req, res) => {
     };
     studentLog.push(currentStudentLog);
   });
-  
+
   console.log(JSON.stringify(studentLog));
   res.render("lecture", { data: { title: meeting.name, studentLog } });
 });
