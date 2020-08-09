@@ -2,8 +2,10 @@ const express = require("express");
 const bp = require("body-parser");
 const app = express();
 const mongoose = require("mongoose");
-app.use(bp.json());
 const Meeting = require("./models/meeting");
+
+app.use(bp.json());
+
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 
@@ -106,6 +108,7 @@ app.get("/meeting/:id", async (req, res) => {
     };
     studentLog.push(currentStudentLog);
   });
+  
   console.log(JSON.stringify(studentLog));
   res.render("lecture", { data: { title: meeting.name, studentLog } });
 });

@@ -10,8 +10,22 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     />
+    
   </head>
   <body>
+    <%
+      function getTime (timestamp) {
+        console.log(timestamp);
+        let ss = Math.floor(timestamp / 1000);
+        let hours = Math.floor(ss / 3600);
+        ss %= 3600;
+        let mins = Math.floor(ss / 60);
+        ss %= 60;
+        console.log(hours, mins, ss);
+        console.log(`${hours} hours, ${mins} minutes, ${ss} seconds`);
+        return `${hours} hours, ${mins} minutes, ${ss} seconds`;
+      }
+    %>
     <div class="container">
       <h3>List of students for lecture: <%= data.title %></h3>
       <div class="accordion" id="accordionExample">
@@ -46,12 +60,12 @@
                   From : <%=
                   data.studentLog[i].durations[j].start.toLocaleString() %> to
                   <%= data.studentLog[i].durations[j].end.toLocaleString() %>
-                  (Duration : <%= data.studentLog[i].durations[j].span %>)
+                  (Duration : <%= getTime(data.studentLog[i].durations[j].span) %>)
                 </li>
                 <%}%>
               </ul>
 
-              <p>Total time spent: <%= data.studentLog[i].totalTimeSpent%></p>
+              <p>Total time spent: <%= getTime(data.studentLog[i].totalTimeSpent)%></p>
             </div>
           </div>
         </div>
